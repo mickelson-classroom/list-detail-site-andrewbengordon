@@ -37,15 +37,26 @@ function ParentComponent() {
   };
 
   return (
-    <div className="parent">
-      <FilterComponent filterSongs={filterSongs} />
-      <ListComponent
-        songs={filteredSongs.length > 0 ? filteredSongs : songs}
-        selectedSong={selectedSong}
-        selectSong={selectItem}
-      />
-      <DetailComponent selectedSong={selectedSong} removeSong={removeSong} />
-      <AddNewItemComponent addSong={addSong} />
+    <div className="parent container text-center">
+      <div className="row">
+        <div className="col-md-3 col-sm-6">
+          <FilterComponent filterSongs={filterSongs} />
+          <ListComponent
+            songs={filteredSongs.length > 0 ? filteredSongs : songs}
+            selectedSong={selectedSong}
+            selectSong={selectItem}
+          />
+        </div>
+        <div className="col-sm-6">
+          <DetailComponent
+            selectedSong={selectedSong}
+            removeSong={removeSong}
+          />
+        </div>
+        <div className="col-md-3">
+          <AddNewItemComponent addSong={addSong} />
+        </div>
+      </div>
     </div>
   );
 }

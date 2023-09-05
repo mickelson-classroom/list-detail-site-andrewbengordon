@@ -13,7 +13,7 @@ function ListComponent({
   selectSong,
 }: ListComponentProps) {
   return (
-    <div className="list">
+    <div>
       <h2>Songs</h2>
       {songs.map((item) => (
         <h4

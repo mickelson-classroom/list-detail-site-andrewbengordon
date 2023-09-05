@@ -7,10 +7,7 @@ interface DetailComponentProps {
   removeSong: (itemId: number) => void;
 }
 
-function DetailComponent({
-  selectedSong,
-  removeSong,
-}: DetailComponentProps) {
+function DetailComponent({ selectedSong, removeSong }: DetailComponentProps) {
   const handleDelete = () => {
     if (selectedSong) {
       removeSong(selectedSong.id);
@@ -18,19 +15,21 @@ function DetailComponent({
   };
 
   return (
-    <Card border="0">
+    <div>
       {selectedSong && (
         <div>
-          <Card.Title>Song Details</Card.Title>
-          <Card.Text>Title: {selectedSong.title}</Card.Text>
-          <Card.Text>Artist: {selectedSong.artist}</Card.Text>
-          <Card.Text>Album: {selectedSong.album}</Card.Text>
+          <h2>Song Details</h2>
+          <div className="row">
+            <p>Title: {selectedSong.title}</p>
+            <p>Artist: {selectedSong.artist}</p>
+            <p>Album: {selectedSong.album}</p>
+          </div>
           <Button variant="danger" onClick={handleDelete}>
             Delete
           </Button>
         </div>
       )}
-    </Card>
+    </div>
   );
 }
 

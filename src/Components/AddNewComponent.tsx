@@ -48,33 +48,47 @@ function AddNewItemComponent({ addSong: addItem }: AddNewItemComponentProps) {
   };
 
   return (
-    <div className="add">
+    <div>
       <h2>Add New Song</h2>
-      <form onSubmit={handleSubmit} className="form">
-        <input
-          type="text"
-          name="title"
-          value={songData.title}
-          placeholder="Title"
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="artist"
-          value={songData.artist}
-          placeholder="Artist"
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="album"
-          value={songData.album}
-          placeholder="Album"
-          onChange={handleChange}
-        />
-        <Button variant="primary" type="submit">
-          Add
-        </Button>
+      <form onSubmit={handleSubmit} className="form container">
+        <div className="row">
+          <label className="form-label col-lg-4">Title</label>
+          <input
+            type="text"
+            name="title"
+            className="col-lg-8"
+            value={songData.title}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="row">
+          <label className="form-label col-lg-4">Artist</label>
+          <input
+            type="text"
+            name="artist"
+            className="col-lg-8"
+            value={songData.artist}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="row">
+          <label className="form-label col-lg-4">Album</label>
+          <input
+            type="text"
+            name="album"
+            className="col-lg-8"
+            value={songData.album}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="row">
+          <div className="col-4" />
+          <div className="col-lg-8">
+            <Button variant="primary" type="submit">
+              Add
+            </Button>
+          </div>
+        </div>
       </form>
     </div>
   );
