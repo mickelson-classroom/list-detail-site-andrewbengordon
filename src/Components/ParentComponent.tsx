@@ -12,8 +12,8 @@ export interface Song {
 }
 
 function ParentComponent() {
-  const [songs, setSongs] = useState<Song[]>([]);
-  const [filteredSongs, setFilteredSongs] = useState<Song[]>([]);
+  const [songs, setSongs] = useState<Song[]>(defaultSongs);
+  const [filteredSongs, setFilteredSongs] = useState<Song[]>(defaultSongs);
   const [selectedSong, setSelectedSong] = useState<Song | undefined>();
 
   const addSong = (newItem: Song) => {
@@ -42,7 +42,7 @@ function ParentComponent() {
         <div className="col-md-3 col-sm-6">
           <FilterComponent filterSongs={filterSongs} />
           <ListComponent
-            songs={filteredSongs.length > 0 ? filteredSongs : songs}
+            songs={filteredSongs}
             selectedSong={selectedSong}
             selectSong={selectItem}
           />
@@ -60,5 +60,25 @@ function ParentComponent() {
     </div>
   );
 }
+
+const defaultSongs: Song[] = [
+{
+  id: 1,
+  title: "Pyschosalad",
+  artist: "The Wiggles",
+  album: "Pyschosalad",
+},
+{
+  id: 2,
+  title: "Cool Song No. 2",
+  artist: "MGMT",
+  album: "Alien Days",
+},
+{
+  id: 3,
+  title: "Heart On My Sleeve",
+  artist: "Drake",
+  album: "Heart On My Sleeve",
+},]
 
 export default ParentComponent;

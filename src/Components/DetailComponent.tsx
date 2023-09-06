@@ -16,9 +16,9 @@ function DetailComponent({ selectedSong, removeSong }: DetailComponentProps) {
 
   return (
     <div>
-      {selectedSong && (
+      <h2>Song Details</h2>
+      {selectedSong ? (
         <div>
-          <h2>Song Details</h2>
           <div className="row">
             <p>Title: {selectedSong.title}</p>
             <p>Artist: {selectedSong.artist}</p>
@@ -28,6 +28,8 @@ function DetailComponent({ selectedSong, removeSong }: DetailComponentProps) {
             Delete
           </Button>
         </div>
+      ) : (
+        <p>No Song Selected</p>
       )}
     </div>
   );
