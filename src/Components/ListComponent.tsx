@@ -14,13 +14,13 @@ function ListComponent({
   selectSong,
 }: ListComponentProps) {
   return (
-    <div className="row">
+    <div className="row m-2">
       <h2>Songs</h2>
       {songs.map((item) => (
         <Button
           key={item.id}
           onClick={() => selectSong(item)}
-          className={`m-2 ${selectedSong?.id === item.id ? "btn-primary" : "btn-light"}`}
+          className={`my-2 ${selectedSong?.id === item.id ? "btn-primary" : "btn-light"}`}
         >
           {item.title}
         </Button>
