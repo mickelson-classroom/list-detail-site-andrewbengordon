@@ -9,15 +9,17 @@ export interface Song {
   title: string;
   artist: string;
   album: string;
+  genres: string[];
 }
 
 function ParentComponent() {
   const [songs, setSongs] = useState<Song[]>(defaultSongs);
-  const [filteredSongs, setFilteredSongs] = useState<Song[]>(defaultSongs);
+  const [filteredSongs, setFilteredSongs] = useState<Song[]>(songs);
   const [selectedSong, setSelectedSong] = useState<Song | undefined>();
 
   const addSong = (newItem: Song) => {
     setSongs((prevItems) => [...prevItems, newItem]);
+    setFilteredSongs((prevItems) => [...prevItems, newItem]);
   };
 
   const removeSong = (itemId: number) => {
@@ -62,23 +64,27 @@ function ParentComponent() {
 }
 
 const defaultSongs: Song[] = [
-{
-  id: 1,
-  title: "Pyschosalad",
-  artist: "The Wiggles",
-  album: "Pyschosalad",
-},
-{
-  id: 2,
-  title: "Cool Song No. 2",
-  artist: "MGMT",
-  album: "Alien Days",
-},
-{
-  id: 3,
-  title: "Heart On My Sleeve",
-  artist: "Drake",
-  album: "Heart On My Sleeve",
-},]
+  {
+    id: 1,
+    title: "Pyschosalad",
+    artist: "The Wiggles",
+    album: "Pyschosalad",
+    genres: ["Children's Music", "Rock"],
+  },
+  {
+    id: 2,
+    title: "Cool Song No. 2",
+    artist: "MGMT",
+    album: "Alien Days",
+    genres: ["Alternative"],
+  },
+  {
+    id: 3,
+    title: "Heart On My Sleeve",
+    artist: "Drake",
+    album: "Heart On My Sleeve",
+    genres: ["Hip Hop"],
+  },
+];
 
 export default ParentComponent;

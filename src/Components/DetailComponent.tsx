@@ -19,11 +19,20 @@ function DetailComponent({ selectedSong, removeSong }: DetailComponentProps) {
       <h2>Song Details</h2>
       {selectedSong ? (
         <div>
-          <div className="row">
+          <div>
             <p>Title: {selectedSong.title}</p>
             <p>Artist: {selectedSong.artist}</p>
             <p>Album: {selectedSong.album}</p>
+            <div className="d-flex flex-wrap justify-content-center align-items-center">
+              Genres: &nbsp;
+              {selectedSong.genres.map((genre) => (
+                <Card>
+                  <Card.Body>{genre}</Card.Body>
+                </Card>
+              ))}
+            </div>
           </div>
+          <br />
           <Button variant="danger" onClick={handleDelete}>
             Delete
           </Button>
