@@ -15,11 +15,19 @@ function DetailComponent({ selectedSong, removeSong }: DetailComponentProps) {
     selectedSong?.genres.push(genre);
   };
 
-  const handleDelete = () => {
+  const handleDeleteSong = () => {
     if (selectedSong) {
       removeSong(selectedSong.id);
     }
   };
+
+  const handleDeleteGenre = (genre: string) => {
+    if (selectedSong) {
+      selectedSong.genres = selectedSong.genres.filter(
+        (item) => item !== genre
+      );
+    }
+  }
 
   return (
     <div>
@@ -34,7 +42,8 @@ function DetailComponent({ selectedSong, removeSong }: DetailComponentProps) {
               Genres: &nbsp;
               {selectedSong.genres.map((genre) => (
                 <Card>
-                  <Card.Body>{genre}</Card.Body>
+                  <div className="d-flex ps-2 justify-content-start" onClick={() => handleDeleteGenre(genre)}>x</div>
+                  <Card.Body className="p-2">{genre}</Card.Body>
                 </Card>
               ))}{" "}
               &nbsp;
@@ -44,7 +53,7 @@ function DetailComponent({ selectedSong, removeSong }: DetailComponentProps) {
             </div>
           </div>
           <br />
-          <Button variant="danger" onClick={handleDelete}>
+          <Button variant="danger" onClick={handleDeleteSong}>
             Delete
           </Button>
           <AddGenreModal
