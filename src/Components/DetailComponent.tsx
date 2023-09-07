@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Song } from "./ParentComponent";
 import { Button, Card } from "react-bootstrap";
+import AddGenreModal from "./AddGenreModal";
 
 interface DetailComponentProps {
   selectedSong?: Song;
@@ -8,6 +9,12 @@ interface DetailComponentProps {
 }
 
 function DetailComponent({ selectedSong, removeSong }: DetailComponentProps) {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleAddGenre = (genre: string) => {
+    selectedSong?.genres.push(genre);
+  };
+
   const handleDelete = () => {
     if (selectedSong) {
       removeSong(selectedSong.id);
@@ -29,13 +36,22 @@ function DetailComponent({ selectedSong, removeSong }: DetailComponentProps) {
                 <Card>
                   <Card.Body>{genre}</Card.Body>
                 </Card>
-              ))}
+              ))}{" "}
+              &nbsp;
+              <Button variant="primary" onClick={() => setShowModal(true)}>
+                +
+              </Button>
             </div>
           </div>
           <br />
           <Button variant="danger" onClick={handleDelete}>
             Delete
           </Button>
+          <AddGenreModal
+            show={showModal}
+            onHide={() => setShowModal(false)}
+            onAddGenre={handleAddGenre}
+          />
         </div>
       ) : (
         <p>No Song Selected</p>
