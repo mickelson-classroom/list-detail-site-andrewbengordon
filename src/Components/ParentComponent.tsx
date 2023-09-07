@@ -3,6 +3,7 @@ import FilterComponent from "./FilterComponent";
 import ListComponent from "./ListComponent";
 import DetailComponent from "./DetailComponent";
 import AddNewItemComponent from "./AddNewComponent";
+import { Button } from "react-bootstrap";
 
 export interface Song {
   id: number;
@@ -16,6 +17,7 @@ function ParentComponent() {
   const [songs, setSongs] = useState<Song[]>(defaultSongs);
   const [filteredSongs, setFilteredSongs] = useState<Song[]>(songs);
   const [selectedSong, setSelectedSong] = useState<Song | undefined>();
+  const [showModal, setShowModal] = useState(false);
 
   const addSong = (newItem: Song) => {
     setSongs((prevItems) => [...prevItems, newItem]);
@@ -38,26 +40,55 @@ function ParentComponent() {
     setSelectedSong(item);
   };
 
+  const addGenre = (genre: string) => {
+    setSelectedSong((prevItem) => {
+      if (prevItem) {
+        prevItem.genres.push(genre);
+        return { ...prevItem };
+      }
+    });
+  };
+
+  const deleteGenre = (genre: string) => {
+    setSelectedSong((prevItem) => {
+      if (prevItem) {
+        prevItem.genres = prevItem.genres.filter((g) => g !== genre);
+        return { ...prevItem };
+      }
+    });
+  };
+
   return (
     <div className="parent container text-center">
       <div className="row">
-        <div className="col-md-3 col-sm-6">
+        <div className="col-sm-6">
           <FilterComponent filterSongs={filterSongs} />
           <ListComponent
             songs={filteredSongs}
             selectedSong={selectedSong}
             selectSong={selectItem}
           />
+          <Button
+            variant="primary"
+            onClick={() => setShowModal(true)}
+            className="my-2"
+          >
+            Add New Song
+          </Button>
         </div>
         <div className="col-sm-6">
           <DetailComponent
             selectedSong={selectedSong}
             removeSong={removeSong}
+            addGenre={addGenre}
+            deleteGenre={deleteGenre}
           />
         </div>
-        <div className="col-md-3">
-          <AddNewItemComponent addSong={addSong} />
-        </div>
+        <AddNewItemComponent
+          addSong={addSong}
+          onHide={() => setShowModal(false)}
+          show={showModal}
+        />
       </div>
     </div>
   );

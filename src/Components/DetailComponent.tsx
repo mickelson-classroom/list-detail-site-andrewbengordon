@@ -1,18 +1,25 @@
 import React, { useState } from "react";
 import { Song } from "./ParentComponent";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Collapse } from "react-bootstrap";
 import AddGenreModal from "./AddGenreModal";
 
 interface DetailComponentProps {
   selectedSong?: Song;
   removeSong: (itemId: number) => void;
+  addGenre: (genre: string) => void;
+  deleteGenre: (genre: string) => void;
 }
 
-function DetailComponent({ selectedSong, removeSong }: DetailComponentProps) {
+function DetailComponent({
+  selectedSong,
+  removeSong,
+  addGenre,
+  deleteGenre,
+}: DetailComponentProps) {
   const [showModal, setShowModal] = useState(false);
 
   const handleAddGenre = (genre: string) => {
-    selectedSong?.genres.push(genre);
+    addGenre(genre);
   };
 
   const handleDeleteSong = () => {
@@ -22,50 +29,53 @@ function DetailComponent({ selectedSong, removeSong }: DetailComponentProps) {
   };
 
   const handleDeleteGenre = (genre: string) => {
-    if (selectedSong) {
-      selectedSong.genres = selectedSong.genres.filter(
-        (item) => item !== genre
-      );
-    }
-  }
+    deleteGenre(genre);
+  };
 
   return (
-    <div>
-      <h2>Song Details</h2>
-      {selectedSong ? (
-        <div>
+    <Card className="m-2 p-2">
+      <Card.Title>Song Details</Card.Title>
+      <Collapse in={selectedSong !== undefined}>
+        {selectedSong ? (
           <div>
-            <p>Title: {selectedSong.title}</p>
-            <p>Artist: {selectedSong.artist}</p>
-            <p>Album: {selectedSong.album}</p>
-            <div className="d-flex flex-wrap justify-content-center align-items-center">
-              Genres: &nbsp;
-              {selectedSong.genres.map((genre) => (
-                <Card>
-                  <div className="d-flex ps-2 justify-content-start" onClick={() => handleDeleteGenre(genre)}>x</div>
-                  <Card.Body className="p-2">{genre}</Card.Body>
-                </Card>
-              ))}{" "}
-              &nbsp;
-              <Button variant="primary" onClick={() => setShowModal(true)}>
-                +
-              </Button>
+            <div>
+              <Card.Subtitle className="py-3">Title: {selectedSong.title}</Card.Subtitle>
+              <Card.Text>Artist: {selectedSong.artist}</Card.Text>
+              <Card.Text>Album: {selectedSong.album}</Card.Text>
+              <Card.Subtitle>Genres</Card.Subtitle>
+              <div className="d-flex flex-wrap justify-content-center align-items-center">
+                {selectedSong.genres.map((genre) => (
+                  <Card className="m-2">
+                    <Card.Subtitle className="px-2 py-1">{genre}</Card.Subtitle>
+                    <Card.Link
+                      className="px-2 pb-1"
+                      href="#"
+                      onClick={() => handleDeleteGenre(genre)}
+                    >
+                      Delete
+                    </Card.Link>
+                  </Card>
+                ))}
+                <Button variant="primary" onClick={() => setShowModal(true)}>
+                  +
+                </Button>
+              </div>
             </div>
+            <br />
+            <Button variant="danger" onClick={handleDeleteSong}>
+              Delete
+            </Button>
+            <AddGenreModal
+              show={showModal}
+              onHide={() => setShowModal(false)}
+              onAddGenre={handleAddGenre}
+            />
           </div>
-          <br />
-          <Button variant="danger" onClick={handleDeleteSong}>
-            Delete
-          </Button>
-          <AddGenreModal
-            show={showModal}
-            onHide={() => setShowModal(false)}
-            onAddGenre={handleAddGenre}
-          />
-        </div>
-      ) : (
-        <p>No Song Selected</p>
-      )}
-    </div>
+        ) : (
+          <p>No Song Selected</p>
+        )}
+      </Collapse>
+    </Card>
   );
 }
 

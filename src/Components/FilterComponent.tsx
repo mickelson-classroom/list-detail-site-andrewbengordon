@@ -12,7 +12,12 @@ function FilterComponent({ filterSongs }: FilterComponentProps) {
 
   return (
     <div>
-      <input type="text" placeholder="Filter items" onChange={handleChange} />
+      <input
+        type="text"
+        placeholder="Filter items"
+        onChange={handleChange}
+        className="my-2"
+      />
     </div>
   );
 }

@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 import { Song } from "./ParentComponent";
 
 interface AddNewSongComponentProps {
   addSong: (newSong: Song) => void;
+  show: boolean;
+  onHide: () => void;
 }
 
-function AddNewSongComponent({ addSong }: AddNewSongComponentProps) {
+function AddNewSongComponent({
+  addSong,
+  show,
+  onHide,
+}: AddNewSongComponentProps) {
   const [songData, setSongData] = useState<Song>({
     id: new Date().getTime(),
     title: "",
@@ -50,63 +56,69 @@ function AddNewSongComponent({ addSong }: AddNewSongComponentProps) {
         album: "",
         genres: [],
       });
+
+      onHide();
     }
   };
 
   return (
-    <div>
-      <h2>Add New Song</h2>
-      <form onSubmit={handleSubmit} className="form container">
-        <div className="row">
-          <label className="form-label col-lg-4">Title</label>
-          <input
-            type="text"
-            name="title"
-            className="col-lg-8"
-            value={songData.title}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="row">
-          <label className="form-label col-lg-4">Artist</label>
-          <input
-            type="text"
-            name="artist"
-            className="col-lg-8"
-            value={songData.artist}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="row">
-          <label className="form-label col-lg-4">Album</label>
-          <input
-            type="text"
-            name="album"
-            className="col-lg-8"
-            value={songData.album}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="row">
-          <label className="form-label col-lg-4">Genres</label>
-          <input
-            type="text"
-            name="genres"
-            className="col-lg-8"
-            value={songData.genres.join(",")}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="row">
-          <div className="col-4" />
-          <div className="col-lg-8">
-            <Button variant="primary" type="submit">
-              Add
-            </Button>
-          </div>
-        </div>
-      </form>
-    </div>
+    <Modal show={show} onHide={onHide} backdrop="static">
+      <Modal.Header closeButton>
+        <Modal.Title>Add New Song</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="title">
+            <Form.Label>Title</Form.Label>
+            <Form.Control
+              type="text"
+              name="title"
+              placeholder="Enter title"
+              value={songData.title}
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Form.Group controlId="artist">
+            <Form.Label>Artist</Form.Label>
+            <Form.Control
+              type="text"
+              name="artist"
+              placeholder="Enter artist"
+              value={songData.artist}
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Form.Group controlId="album">
+            <Form.Label>Album</Form.Label>
+            <Form.Control
+              type="text"
+              name="album"
+              placeholder="Enter album"
+              value={songData.album}
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Form.Group controlId="genres">
+            <Form.Label>Genres</Form.Label>
+            <Form.Control
+              type="text"
+              name="genres"
+              placeholder="Enter genres separated by commas"
+              value={songData.genres.join(",")}
+              onChange={handleChange}
+            />
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={onHide}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={handleSubmit}>
+          Add Song
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 }
 
