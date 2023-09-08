@@ -25,6 +25,10 @@ const AddGenreModal = ({ show, onHide, onAddGenre }: AddGenreModalProps) => {
   };
 
   return (
+        <div>
+      {show && (
+        <div className="modal-backdrop" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)", position: "fixed", top: 0, right: 0, bottom: 0, left: 0, zIndex: 1040 }} onClick={onHide}></div>
+      )}
     <div
       className={`modal ${show ? "show" : ""}`}
       style={{ display: show ? "block" : "none" }}
@@ -72,6 +76,7 @@ const AddGenreModal = ({ show, onHide, onAddGenre }: AddGenreModalProps) => {
         </div>
       </div>
     </div>
+        </div>
   );
 };
 
