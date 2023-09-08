@@ -38,29 +38,33 @@ function DetailComponent({
       <Collapse in={selectedSong !== undefined}>
         {selectedSong ? (
           <div>
-            <div>
-              <Card.Subtitle className="py-3">Title: {selectedSong.title}</Card.Subtitle>
-              <Card.Text>Artist: {selectedSong.artist}</Card.Text>
-              <Card.Text>Album: {selectedSong.album}</Card.Text>
-              <Card.Subtitle>Genres</Card.Subtitle>
-              <div className="d-flex flex-wrap justify-content-center align-items-center">
-                {selectedSong.genres.map((genre) => (
-                  <Card className="m-2">
-                    <Card.Subtitle className="px-2 pb-1 pt-2">{genre}</Card.Subtitle>
-                    <Card.Link
-                      className="px-2 pb-1"
-                      href="#"
-                      onClick={() => handleDeleteGenre(genre)}
-                    >
-                      Delete
-                    </Card.Link>
-                  </Card>
-                ))}
-                <Button variant="primary" onClick={() => setShowModal(true)}>
-                  +
-                </Button>
-              </div>
+            <Card.Subtitle className="py-3">
+              Title: {selectedSong.title}
+            </Card.Subtitle>
+            <Card.Text>Artist: {selectedSong.artist}</Card.Text>
+            <Card.Text>Album: {selectedSong.album}</Card.Text>
+            <Card.Subtitle>Genres</Card.Subtitle>
+            <div className="d-flex flex-wrap justify-content-center align-items-center">
+              {selectedSong.genres.map((genre) => (
+                <Card className="m-2">
+                  <Card.Subtitle className="px-2 pb-1 pt-2">
+                    {genre}
+                  </Card.Subtitle>
+                  <Card.Link
+                    className="px-2 pb-1"
+                    href="#"
+                    onClick={() => handleDeleteGenre(genre)}
+                  >
+                    Delete
+                  </Card.Link>
+                </Card>
+              ))}
+              <Button variant="primary" onClick={() => setShowModal(true)}>
+                +
+              </Button>
             </div>
+            <Card.Text>Release Year: {selectedSong.releaseYear}</Card.Text>
+            <Card.Text>Rating: {selectedSong.rating}</Card.Text>
             <br />
             <Button variant="danger" onClick={handleDeleteSong}>
               Delete

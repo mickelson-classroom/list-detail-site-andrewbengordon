@@ -11,6 +11,8 @@ export interface Song {
   artist: string;
   album: string;
   genres: string[];
+  releaseYear: number;
+  rating: number;
 }
 
 function ParentComponent() {
@@ -26,6 +28,9 @@ function ParentComponent() {
 
   const removeSong = (itemId: number) => {
     setSongs((prevItems) => prevItems.filter((item) => item.id !== itemId));
+    setFilteredSongs((prevItems) =>
+      prevItems.filter((item) => item.id !== itemId)
+    );
     setSelectedSong(undefined);
   };
 
@@ -101,6 +106,8 @@ const defaultSongs: Song[] = [
     artist: "The Wiggles",
     album: "Pyschosalad",
     genres: ["Children's Music", "Rock"],
+    releaseYear: 2020,
+    rating: 5,
   },
   {
     id: 2,
@@ -108,6 +115,8 @@ const defaultSongs: Song[] = [
     artist: "MGMT",
     album: "Alien Days",
     genres: ["Alternative"],
+    releaseYear: 2013,
+    rating: 4,
   },
   {
     id: 3,
@@ -115,6 +124,8 @@ const defaultSongs: Song[] = [
     artist: "Drake",
     album: "Heart On My Sleeve",
     genres: ["Hip Hop"],
+    releaseYear: 2018,
+    rating: 3,
   },
 ];
 
