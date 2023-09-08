@@ -7,11 +7,11 @@ interface ListComponentProps {
   selectSong: (item: Song) => void;
 }
 
-function ListComponent({
+export const ListComponent = ({
   songs,
   selectedSong,
   selectSong,
-}: ListComponentProps) {
+}: ListComponentProps) => {
   return (
     <div className="row m-2">
       <h2>Songs</h2>
@@ -19,13 +19,13 @@ function ListComponent({
         <button
           key={item.id}
           onClick={() => selectSong(item)}
-          className={`my-2 btn ${selectedSong?.id === item.id ? "btn-primary" : "btn-light"}`}
+          className={`my-2 btn ${
+            selectedSong?.id === item.id ? "btn-primary" : "btn-light"
+          }`}
         >
           {item.title}
         </button>
       ))}
     </div>
   );
-}
-
-export default ListComponent;
+};

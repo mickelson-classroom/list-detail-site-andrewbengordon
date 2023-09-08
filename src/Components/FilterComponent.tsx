@@ -4,7 +4,7 @@ interface FilterComponentProps {
   filterSongs: (filterValue: string) => void;
 }
 
-function FilterComponent({ filterSongs }: FilterComponentProps) {
+export const FilterComponent = ({ filterSongs }: FilterComponentProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const filterValue = event.target.value;
     filterSongs(filterValue);
@@ -20,6 +20,4 @@ function FilterComponent({ filterSongs }: FilterComponentProps) {
       />
     </div>
   );
-}
-
-export default FilterComponent;
+};

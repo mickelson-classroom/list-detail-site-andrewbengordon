@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Song } from "./ParentComponent";
-import AddGenreModal from "./AddGenreModal";
+import { AddGenreModal } from "./AddGenreModal";
 
 interface DetailComponentProps {
   selectedSong?: Song;
@@ -9,12 +9,12 @@ interface DetailComponentProps {
   deleteGenre: (genre: string) => void;
 }
 
-function DetailComponent({
+export const DetailComponent = ({
   selectedSong,
   removeSong,
   addGenre,
   deleteGenre,
-}: DetailComponentProps) {
+}: DetailComponentProps) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleAddGenre = (genre: string) => {
@@ -88,6 +88,4 @@ function DetailComponent({
       </div>
     </div>
   );
-}
-
-export default DetailComponent;
+};

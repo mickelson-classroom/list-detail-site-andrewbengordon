@@ -7,11 +7,11 @@ interface AddNewSongComponentProps {
   onHide: () => void;
 }
 
-function AddNewSongComponent({
+export const AddNewSongComponent = ({
   addSong,
   show,
   onHide,
-}: AddNewSongComponentProps) {
+}: AddNewSongComponentProps) => {
   const [songData, setSongData] = useState<Song>({
     id: new Date().getTime(),
     title: "",
@@ -221,6 +221,4 @@ function AddNewSongComponent({
       </div>
     </div>
   );
-}
-
-export default AddNewSongComponent;
+};

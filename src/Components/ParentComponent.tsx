@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import FilterComponent from "./FilterComponent";
-import ListComponent from "./ListComponent";
-import DetailComponent from "./DetailComponent";
-import AddNewItemComponent from "./AddNewComponent";
+import { FilterComponent } from "./FilterComponent";
+import { ListComponent } from "./ListComponent";
+import { DetailComponent } from "./DetailComponent";
+import { AddNewSongComponent } from "./AddNewComponent";
 
 export interface Song {
   id: number;
@@ -87,7 +87,7 @@ function ParentComponent() {
             deleteGenre={deleteGenre}
           />
         </div>
-        <AddNewItemComponent
+        <AddNewSongComponent
           addSong={addSong}
           onHide={() => setShowModal(false)}
           show={showModal}
