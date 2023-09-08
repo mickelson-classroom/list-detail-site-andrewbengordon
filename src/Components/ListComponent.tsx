@@ -1,6 +1,5 @@
 import React from "react";
 import { Song } from "./ParentComponent";
-import { Button } from "react-bootstrap";
 
 interface ListComponentProps {
   songs: Song[];
@@ -17,13 +16,13 @@ function ListComponent({
     <div className="row m-2">
       <h2>Songs</h2>
       {songs.map((item) => (
-        <Button
+        <button
           key={item.id}
           onClick={() => selectSong(item)}
-          className={`my-2 ${selectedSong?.id === item.id ? "btn-primary" : "btn-light"}`}
+          className={`my-2 btn ${selectedSong?.id === item.id ? "btn-primary" : "btn-light"}`}
         >
           {item.title}
-        </Button>
+        </button>
       ))}
     </div>
   );

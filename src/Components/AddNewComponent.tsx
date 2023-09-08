@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal, Form, Col, Row } from "react-bootstrap";
 import { Song } from "./ParentComponent";
-import { text } from "stream/consumers";
 
 interface AddNewSongComponentProps {
   addSong: (newSong: Song) => void;
@@ -46,9 +44,7 @@ function AddNewSongComponent({
     const form = event.currentTarget as HTMLFormElement;
     event.preventDefault();
 
-    if (
-      form.checkValidity() === false
-    ) {
+    if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
       addSong(songData);
@@ -69,115 +65,142 @@ function AddNewSongComponent({
   };
 
   return (
-    <Modal show={show} onHide={onHide} backdrop="static">
-      <Modal.Header closeButton>
-        <Modal.Title>Add New Song</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
-          <Row className="mb-3">
-            <Form.Group as={Col} controlId="title">
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                name="title"
-                placeholder="Enter title"
-                value={songData.title}
-                onChange={handleChange}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please enter a title.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} md="6" controlId="artist">
-              <Form.Label>Artist</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                name="artist"
-                placeholder="Enter artist"
-                value={songData.artist}
-                onChange={handleChange}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please enter an artist.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="6" controlId="album">
-              <Form.Label>Album</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                name="album"
-                placeholder="Enter album"
-                value={songData.album}
-                onChange={handleChange}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please enter an album.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group controlId="genres">
-              <Form.Label>Genres</Form.Label>
-              <Form.Control
-                required
-                as="textarea"
-                name="genres"
-                placeholder="Enter genres separated by commas"
-                value={songData.genres.join(",")}
-                onChange={handleChange}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please enter at least one genre.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="releaseYear">
-              <Form.Label>Release Year</Form.Label>
-              <Form.Control
-                required
-                type="number"
-                name="releaseYear"
-                placeholder="Enter release year"
-                value={songData.releaseYear}
-                onChange={handleChange}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please enter a release year.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="3" controlId="rating">
-              <Form.Label>Rating</Form.Label>
-              <Form.Control
-                required
-                type="number"
-                name="rating"
-                placeholder="Enter rating between 1 and 5"
-                value={songData.rating}
-                onChange={handleChange}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please enter a rating between 1 and 5.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>
-          Close
-        </Button>
-        <Button variant="primary" onClick={handleSubmit}>
-          Add Song
-        </Button>
-      </Modal.Footer>
-    </Modal>
+    <div
+      className={`modal ${show ? "show" : ""}`}
+      style={{ display: show ? "block" : "none" }}
+    >
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Add New Song</h5>
+            <button
+              type="button"
+              className="btn-close"
+              onClick={onHide}
+            ></button>
+          </div>
+          <div className="modal-body">
+            <form
+              noValidate
+              className={validated ? "was-validated" : ""}
+              onSubmit={handleSubmit}
+            >
+              <div className="mb-3">
+                <label htmlFor="title" className="form-label">
+                  Title
+                </label>
+                <input
+                  required
+                  type="text"
+                  className="form-control"
+                  name="title"
+                  placeholder="Enter title"
+                  value={songData.title}
+                  onChange={handleChange}
+                />
+                <div className="invalid-feedback">Please enter a title.</div>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="artist" className="form-label">
+                  Artist
+                </label>
+                <input
+                  required
+                  type="text"
+                  className="form-control"
+                  name="artist"
+                  placeholder="Enter artist"
+                  value={songData.artist}
+                  onChange={handleChange}
+                />
+                <div className="invalid-feedback">Please enter an artist.</div>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="album" className="form-label">
+                  Album
+                </label>
+                <input
+                  required
+                  type="text"
+                  className="form-control"
+                  name="album"
+                  placeholder="Enter album"
+                  value={songData.album}
+                  onChange={handleChange}
+                />
+                <div className="invalid-feedback">Please enter an album.</div>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="genres" className="form-label">
+                  Genres
+                </label>
+                <input
+                  required
+                  className="form-control"
+                  name="genres"
+                  placeholder="Enter genres separated by commas"
+                  value={songData.genres.join(",")}
+                  onChange={handleChange}
+                ></input>
+                <div className="invalid-feedback">
+                  Please enter at least one genre.
+                </div>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="releaseYear" className="form-label">
+                  Release Year
+                </label>
+                <input
+                  required
+                  type="number"
+                  className="form-control"
+                  name="releaseYear"
+                  placeholder="Enter release year"
+                  value={songData.releaseYear}
+                  onChange={handleChange}
+                />
+                <div className="invalid-feedback">
+                  Please enter a release year.
+                </div>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="rating" className="form-label">
+                  Rating
+                </label>
+                <input
+                  required
+                  type="number"
+                  className="form-control"
+                  name="rating"
+                  placeholder="Enter rating between 1 and 5"
+                  value={songData.rating}
+                  onChange={handleChange}
+                />
+                <div className="invalid-feedback">
+                  Please enter a rating between 1 and 5.
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={onHide}
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  onClick={handleSubmit}
+                >
+                  Add Song
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 

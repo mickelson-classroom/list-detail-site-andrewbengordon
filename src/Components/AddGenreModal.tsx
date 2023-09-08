@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
 
 interface AddGenreModalProps {
   show: boolean;
@@ -26,30 +25,53 @@ const AddGenreModal = ({ show, onHide, onAddGenre }: AddGenreModalProps) => {
   };
 
   return (
-    <Modal show={show} onHide={onHide}>
-      <Modal.Header closeButton>
-        <Modal.Title>Add Genre</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form.Group controlId="genreInput">
-          <Form.Label>Genre Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter genre"
-            value={genre}
-            onChange={handleGenreChange}
-          />
-        </Form.Group>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>
-          Close
-        </Button>
-        <Button variant="primary" onClick={handleAddGenre}>
-          Add Genre
-        </Button>
-      </Modal.Footer>
-    </Modal>
+    <div
+      className={`modal ${show ? "show" : ""}`}
+      style={{ display: show ? "block" : "none" }}
+    >
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Add Genre</h5>
+            <button
+              type="button"
+              className="btn-close"
+              onClick={onHide}
+            ></button>
+          </div>
+          <div className="modal-body">
+            <div className="form-group">
+              <label htmlFor="genreInput" className="form-label">
+                Genre Name
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter genre"
+                value={genre}
+                onChange={handleGenreChange}
+              />
+            </div>
+          </div>
+          <div className="modal-footer">
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={onHide}
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleAddGenre}
+            >
+              Add Genre
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

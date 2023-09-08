@@ -3,7 +3,6 @@ import FilterComponent from "./FilterComponent";
 import ListComponent from "./ListComponent";
 import DetailComponent from "./DetailComponent";
 import AddNewItemComponent from "./AddNewComponent";
-import { Button } from "react-bootstrap";
 
 export interface Song {
   id: number;
@@ -73,13 +72,12 @@ function ParentComponent() {
             selectedSong={selectedSong}
             selectSong={selectItem}
           />
-          <Button
-            variant="primary"
+          <button
             onClick={() => setShowModal(true)}
-            className="my-2"
+            className="btn btn-primary my-2"
           >
             Add New Song
-          </Button>
+          </button>
         </div>
         <div className="col-sm-6">
           <DetailComponent
