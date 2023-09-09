@@ -40,16 +40,16 @@ export const DetailComponent = ({
 
   return (
     <div className="card m-2 p-2">
-      <a
-        href="#song-details"
+      <button
         data-bs-toggle="collapse"
-        className="card-title h2"
-        role="button"
+        data-bs-target="#song-details"
+        className="btn fs-2"
         aria-expanded="false"
+        aria-controls="song-details"
         onClick={(e) => e.preventDefault()}
       >
         Song Details
-      </a>
+      </button>
       <div id="song-details" className="collapse">
         {selectedSong ? (
           <div>
