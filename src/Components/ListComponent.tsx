@@ -15,17 +15,20 @@ export const ListComponent = ({
   return (
     <div className="row m-2">
       <h2>Songs</h2>
-      {songs.map((item) => (
-        <button
-          key={item.id}
-          onClick={() => selectSong(item)}
-          className={`my-2 btn ${
-            selectedSong?.id === item.id ? "btn-primary" : "btn-light"
-          }`}
-        >
-          {item.title}
-        </button>
-      ))}
+      <ul className="list-group">
+        {songs.map((item) => (
+          <li
+            key={item.id}
+            role="button"
+            onClick={() => selectSong(item)}
+            className={` list-group-item ${
+              selectedSong?.id === item.id && "active"
+            }`}
+          >
+            {item.title}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

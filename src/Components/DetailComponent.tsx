@@ -17,6 +17,13 @@ export const DetailComponent = ({
 }: DetailComponentProps) => {
   const [showModal, setShowModal] = useState(false);
 
+  const SongDetail = {
+    Artist: selectedSong?.artist,
+    Album: selectedSong?.album,
+    "Release Year": selectedSong?.releaseYear,
+    Rating: selectedSong?.rating,
+  };
+
   const handleAddGenre = (genre: string) => {
     addGenre(genre);
   };
@@ -46,21 +53,25 @@ export const DetailComponent = ({
       <div id="song-details" className="collapse">
         {selectedSong ? (
           <div>
-            <h6 className="py-3">Title: {selectedSong.title}</h6>
-            <p>Artist: {selectedSong.artist}</p>
-            <p>Album: {selectedSong.album}</p>
-            <h6>Genres</h6>
+            <hr />
+            <strong className="fs-2">{selectedSong.title}</strong>
+            {Object.entries(SongDetail).map(([key, value]) => (
+              <div className="fs-3">
+                <strong>{key}</strong>: {value}
+              </div>
+            ))}
+            <br />
+            <strong className="fs-3">Genres</strong>
             <div className="d-flex flex-wrap justify-content-center align-items-center">
               {selectedSong.genres.map((genre, index) => (
                 <div className="card m-2" key={index}>
-                  <h6 className="px-2 pb-1 pt-2">{genre}</h6>
-                  <a
-                    className="px-2 pb-1"
-                    href="#"
+                  <h6 className="px-2 pt-2">{genre}</h6>
+                  <button
+                    className="btn btn-link px-2 py-1"
                     onClick={() => handleDeleteGenre(genre)}
                   >
                     Delete
-                  </a>
+                  </button>
                 </div>
               ))}
               <button
@@ -70,8 +81,6 @@ export const DetailComponent = ({
                 +
               </button>
             </div>
-            <p>Release Year: {selectedSong.releaseYear}</p>
-            <p>Rating: {selectedSong.rating}</p>
             <br />
             <button className="btn btn-danger" onClick={handleDeleteSong}>
               Delete
