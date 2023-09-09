@@ -16,6 +16,7 @@ export const DetailComponent = ({
   deleteGenre,
 }: DetailComponentProps) => {
   const [showModal, setShowModal] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const SongDetail = {
     Artist: selectedSong?.artist,
@@ -38,22 +39,34 @@ export const DetailComponent = ({
     deleteGenre(genre);
   };
 
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
   return (
-    <div className="card m-2 p-2">
+    <div className="card m-2">
       <button
         data-bs-toggle="collapse"
         data-bs-target="#song-details"
-        className="btn fs-2"
-        aria-expanded="false"
+        className="btn shadow-none fs-2"
+        aria-expanded={!isCollapsed}
         aria-controls="song-details"
-        onClick={(e) => e.preventDefault()}
+        onClick={(e) => {
+          e.preventDefault();
+          toggleCollapse();
+        }}
       >
-        Song Details
+        Song Details &nbsp;
+        {isCollapsed ? (
+          <i className="bi bi-chevron-down"></i>
+        ) : (
+          <i className="bi bi-chevron-up"></i>
+        )}
       </button>
       <div id="song-details" className="collapse">
         {selectedSong ? (
           <div>
-            <hr />
+            <hr className="m-0" />
             <strong className="fs-2">{selectedSong.title}</strong>
             {Object.entries(SongDetail).map(([key, value]) => (
               <div className="fs-3">
