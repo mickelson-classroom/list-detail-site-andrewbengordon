@@ -12,7 +12,7 @@ export const AddNewSongComponent = ({
   show,
   onHide,
 }: AddNewSongComponentProps) => {
-  const [songData, setSongData] = useState<Song>({
+  const initialSongData: Song = {
     id: new Date().getTime(),
     title: "",
     artist: "",
@@ -20,8 +20,12 @@ export const AddNewSongComponent = ({
     genres: [],
     releaseYear: 0,
     rating: 0,
-  });
-  const [validated, setValidated] = useState(false);
+  };
+
+  const [songData, setSongData] = useState<Song>(initialSongData);
+  const [validationErrors, setValidationErrors] = useState<
+    Record<string, string>
+  >({});
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -41,27 +45,50 @@ export const AddNewSongComponent = ({
   };
 
   const handleSubmit = (event: React.FormEvent) => {
-    const form = event.currentTarget as HTMLFormElement;
     event.preventDefault();
 
-    if (form.checkValidity() === false) {
-      event.stopPropagation();
+    const form = event.currentTarget as HTMLFormElement;
+
+    const errors: Record<string, string> = {};
+
+    if (songData.title.length === 0) {
+      errors["title"] = "Please enter a title.";
+    }
+
+    if (songData.artist.length === 0) {
+      errors["artist"] = "Please enter an artist.";
+    }
+
+    if (songData.album.length === 0) {
+      errors["album"] = "Please enter an album.";
+    }
+
+    if (songData.rating < 1 || songData.rating > 5) {
+      errors["rating"] = "Please enter a rating between 1 and 5.";
+    }
+
+    if (songData.genres.length === 0) {
+      errors["genres"] = "Please enter at least one genre.";
+    }
+
+    if (
+      songData.releaseYear < 1900 ||
+      songData.releaseYear > new Date().getFullYear()
+    ) {
+      errors["releaseYear"] =
+        "Please enter a release year between 1900 and the current year.";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setValidationErrors(errors);
     } else {
       addSong(songData);
 
-      setSongData({
-        id: new Date().getTime(),
-        title: "",
-        artist: "",
-        album: "",
-        genres: [],
-        releaseYear: 0,
-        rating: 0,
-      });
+      setSongData(initialSongData);
+      setValidationErrors({});
 
       onHide();
     }
-    setValidated(true);
   };
 
   return (
@@ -96,11 +123,7 @@ export const AddNewSongComponent = ({
               ></button>
             </div>
             <div className="modal-body">
-              <form
-                noValidate
-                className={validated ? "was-validated" : ""}
-                onSubmit={handleSubmit}
-              >
+              <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="title" className="form-label">
                     Title
@@ -108,7 +131,9 @@ export const AddNewSongComponent = ({
                   <input
                     required
                     type="text"
-                    className="form-control"
+                    className={`form-control ${
+                      validationErrors["title"] ? "is-invalid" : ""
+                    }`}
                     name="title"
                     placeholder="Enter title"
                     value={songData.title}
@@ -123,7 +148,9 @@ export const AddNewSongComponent = ({
                   <input
                     required
                     type="text"
-                    className="form-control"
+                    className={`form-control ${
+                      validationErrors["artist"] ? "is-invalid" : ""
+                    }`}
                     name="artist"
                     placeholder="Enter artist"
                     value={songData.artist}
@@ -140,7 +167,9 @@ export const AddNewSongComponent = ({
                   <input
                     required
                     type="text"
-                    className="form-control"
+                    className={`form-control ${
+                      validationErrors["album"] ? "is-invalid" : ""
+                    }`}
                     name="album"
                     placeholder="Enter album"
                     value={songData.album}
@@ -154,7 +183,9 @@ export const AddNewSongComponent = ({
                   </label>
                   <input
                     required
-                    className="form-control"
+                    className={`form-control ${
+                      validationErrors["genres"] ? "is-invalid" : ""
+                    }`}
                     name="genres"
                     placeholder="Enter genres separated by commas"
                     value={songData.genres.join(",")}
@@ -171,14 +202,17 @@ export const AddNewSongComponent = ({
                   <input
                     required
                     type="number"
-                    className="form-control"
+                    className={`form-control ${
+                      validationErrors["releaseYear"] ? "is-invalid" : ""
+                    }`}
                     name="releaseYear"
                     placeholder="Enter release year"
                     value={songData.releaseYear}
                     onChange={handleChange}
                   />
                   <div className="invalid-feedback">
-                    Please enter a release year.
+                    Please enter a release year between 1900 and the current
+                    year.
                   </div>
                 </div>
                 <div className="mb-3">
@@ -188,7 +222,9 @@ export const AddNewSongComponent = ({
                   <input
                     required
                     type="number"
-                    className="form-control"
+                    className={`form-control ${
+                      validationErrors["rating"] ? "is-invalid" : ""
+                    }`}
                     name="rating"
                     placeholder="Enter rating between 1 and 5"
                     value={songData.rating}

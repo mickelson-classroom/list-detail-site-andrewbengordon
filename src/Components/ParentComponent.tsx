@@ -65,7 +65,7 @@ function ParentComponent() {
   return (
     <div className="parent container text-center">
       <div className="row">
-        <div className="col-sm-6">
+        <div className="col-md-6">
           <FilterComponent filterSongs={filterSongs} />
           <ListComponent
             songs={filteredSongs}
@@ -79,7 +79,7 @@ function ParentComponent() {
             Add New Song
           </button>
         </div>
-        <div className="col-sm-6">
+        <div className="col-md-6">
           <DetailComponent
             selectedSong={selectedSong}
             removeSong={removeSong}

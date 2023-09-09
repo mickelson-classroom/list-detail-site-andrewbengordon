@@ -45,10 +45,11 @@ export const DetailComponent = ({
 
   return (
     <div className="card m-2">
-      <button
+      <div
         data-bs-toggle="collapse"
         data-bs-target="#song-details"
-        className="btn shadow-none fs-2"
+        className="fs-2 py-2"
+        role="button"
         aria-expanded={!isCollapsed}
         aria-controls="song-details"
         onClick={(e) => {
@@ -62,7 +63,7 @@ export const DetailComponent = ({
         ) : (
           <i className="bi bi-chevron-up"></i>
         )}
-      </button>
+      </div>
       <div id="song-details" className="collapse">
         {selectedSong ? (
           <div>
@@ -95,7 +96,7 @@ export const DetailComponent = ({
               </button>
             </div>
             <br />
-            <button className="btn btn-danger" onClick={handleDeleteSong}>
+            <button className="btn btn-danger mb-4" onClick={handleDeleteSong}>
               Delete
             </button>
             <AddGenreModal
