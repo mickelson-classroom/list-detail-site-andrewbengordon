@@ -18,8 +18,8 @@ export const AddNewSongComponent = ({
     artist: "",
     album: "",
     genres: [],
-    releaseYear: 0,
-    rating: 0,
+    releaseYear: 2023,
+    rating: 5,
   };
 
   const [songData, setSongData] = useState<Song>(initialSongData);
@@ -46,8 +46,6 @@ export const AddNewSongComponent = ({
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-
-    const form = event.currentTarget as HTMLFormElement;
 
     const errors: Record<string, string> = {};
 
@@ -203,13 +201,14 @@ export const AddNewSongComponent = ({
                     required
                     type="number"
                     className={`form-control ${
-                      validationErrors["releaseYear"] ? "is-invalid" : ""
+                      validationErrors["releaseYear"] ? "is-invalid" : "is-valid"
                     }`}
                     name="releaseYear"
                     placeholder="Enter release year"
                     value={songData.releaseYear}
                     onChange={handleChange}
                   />
+                  <div className="valid-feedback">Looks good!</div>
                   <div className="invalid-feedback">
                     Please enter a release year between 1900 and the current
                     year.
@@ -223,13 +222,14 @@ export const AddNewSongComponent = ({
                     required
                     type="number"
                     className={`form-control ${
-                      validationErrors["rating"] ? "is-invalid" : ""
+                      validationErrors["rating"] ? "is-invalid" : "is-valid"
                     }`}
                     name="rating"
                     placeholder="Enter rating between 1 and 5"
                     value={songData.rating}
                     onChange={handleChange}
                   />
+                  <div className="valid-feedback">Looks good!</div>
                   <div className="invalid-feedback">
                     Please enter a rating between 1 and 5.
                   </div>

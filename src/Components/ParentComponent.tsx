@@ -62,6 +62,17 @@ function ParentComponent() {
     });
   };
 
+  const updateSongDetails = (updatedSong: Song) => {
+    const updatedSongs = [...songs];
+    const index = updatedSongs.findIndex((song) => song.id === updatedSong.id);
+
+    if (index !== -1) {
+      updatedSongs[index] = updatedSong;
+      setSongs(updatedSongs);
+      setSelectedSong(updatedSong);
+    }
+  };
+
   return (
     <div className="parent container text-center">
       <div className="row">
@@ -85,6 +96,7 @@ function ParentComponent() {
             removeSong={removeSong}
             addGenre={addGenre}
             deleteGenre={deleteGenre}
+            updateSongDetails={updateSongDetails}
           />
         </div>
         <AddNewSongComponent
