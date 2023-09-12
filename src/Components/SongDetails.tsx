@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Song } from "./MainLayout";
 import { AddGenreModal } from "./AddGenreModal";
+import { EditSong } from "./EditSong";
+import { validate } from "../helpers/validate";
 
 interface SongDetailsProps {
   selectedSong?: Song;
@@ -21,6 +23,9 @@ export const SongDetails = ({
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editedSong, setEditedSong] = useState<Song | undefined>(selectedSong);
+  const [validationErrors, setValidationErrors] = useState<
+    Record<string, string>
+  >({});
 
   const SongDetail = {
     Artist: selectedSong?.artist,
@@ -54,8 +59,14 @@ export const SongDetails = ({
 
   const handleSaveClick = () => {
     if (editedSong) {
-      updateSongDetails(editedSong);
-      setIsEditing(false);
+      const errors = validate(editedSong);
+      if (Object.keys(errors).length > 0) {
+        setValidationErrors(errors);
+      } else {
+        setValidationErrors({});
+        updateSongDetails(editedSong);
+        setIsEditing(false);
+      }
     }
   };
 
@@ -70,6 +81,12 @@ export const SongDetails = ({
         ...editedSong,
         [name]: value,
       });
+      const errors = validate(editedSong);
+      if (Object.keys(errors).length > 0) {
+        setValidationErrors(errors);
+      } else {
+        setValidationErrors({});
+      }
     }
   };
 
@@ -99,89 +116,13 @@ export const SongDetails = ({
           <div>
             <hr className="m-0" />
             {isEditing ? (
-              <div className="p-4">
-                <form>
-                  <div className="mb-3">
-                    <label htmlFor="title" className="form-label">
-                      Title
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="title"
-                      name="title"
-                      value={editedSong?.title}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="artist" className="form-label">
-                      Artist
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="artist"
-                      name="artist"
-                      value={editedSong?.artist}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="album" className="form-label">
-                      Album
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="album"
-                      name="album"
-                      value={editedSong?.album}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="releaseYear" className="form-label">
-                      Release Year
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="releaseYear"
-                      name="releaseYear"
-                      value={editedSong?.releaseYear}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="rating" className="form-label">
-                      Rating
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="rating"
-                      name="rating"
-                      value={editedSong?.rating}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    className="btn btn-success"
-                    onClick={handleSaveClick}
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-secondary ms-2"
-                    onClick={handleCancelClick}
-                  >
-                    Cancel
-                  </button>
-                </form>
-              </div>
+              <EditSong
+                editedSong={editedSong}
+                handleInputChange={handleInputChange}
+                handleSaveClick={handleSaveClick}
+                handleCancelClick={handleCancelClick}
+                validationErrors={validationErrors}
+              />
             ) : (
               <div>
                 <strong className="fs-2">{selectedSong.title}</strong>

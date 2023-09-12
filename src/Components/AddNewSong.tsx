@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Song } from "./MainLayout";
+import { TextInput } from "./TextInput";
+import { validate } from "../helpers/validate";
 
 interface AddNewSongProps {
   addSong: (newSong: Song) => void;
@@ -19,6 +21,7 @@ export const AddNewSong = ({ addSong, show, onHide }: AddNewSongProps) => {
   };
 
   const [songData, setSongData] = useState<Song>(initialSongData);
+
   const [validationErrors, setValidationErrors] = useState<
     Record<string, string>
   >({});
@@ -38,40 +41,20 @@ export const AddNewSong = ({ addSong, show, onHide }: AddNewSongProps) => {
         [name]: value,
       }));
     }
+
+    const errors = validate(songData);
+
+    if (Object.keys(errors).length > 0) {
+      setValidationErrors(errors);
+    } else {
+      setValidationErrors({});
+    }
   };
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    const errors: Record<string, string> = {};
-
-    if (songData.title.length === 0) {
-      errors["title"] = "Please enter a title.";
-    }
-
-    if (songData.artist.length === 0) {
-      errors["artist"] = "Please enter an artist.";
-    }
-
-    if (songData.album.length === 0) {
-      errors["album"] = "Please enter an album.";
-    }
-
-    if (songData.rating < 1 || songData.rating > 5) {
-      errors["rating"] = "Please enter a rating between 1 and 5.";
-    }
-
-    if (songData.genres.length === 0) {
-      errors["genres"] = "Please enter at least one genre.";
-    }
-
-    if (
-      songData.releaseYear < 1900 ||
-      songData.releaseYear > new Date().getFullYear()
-    ) {
-      errors["releaseYear"] =
-        "Please enter a release year between 1900 and the current year.";
-    }
+    const errors = validate(songData);
 
     if (Object.keys(errors).length > 0) {
       setValidationErrors(errors);
@@ -118,120 +101,80 @@ export const AddNewSong = ({ addSong, show, onHide }: AddNewSongProps) => {
             </div>
             <div className="modal-body">
               <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                  <label htmlFor="title" className="form-label">
-                    Title
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    className={`form-control ${
-                      validationErrors["title"] ? "is-invalid" : ""
-                    }`}
-                    name="title"
-                    placeholder="Enter title"
-                    value={songData.title}
-                    onChange={handleChange}
-                  />
-                  <div className="invalid-feedback">Please enter a title.</div>
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="artist" className="form-label">
-                    Artist
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    className={`form-control ${
-                      validationErrors["artist"] ? "is-invalid" : ""
-                    }`}
-                    name="artist"
-                    placeholder="Enter artist"
-                    value={songData.artist}
-                    onChange={handleChange}
-                  />
-                  <div className="invalid-feedback">
-                    Please enter an artist.
-                  </div>
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="album" className="form-label">
-                    Album
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    className={`form-control ${
-                      validationErrors["album"] ? "is-invalid" : ""
-                    }`}
-                    name="album"
-                    placeholder="Enter album"
-                    value={songData.album}
-                    onChange={handleChange}
-                  />
-                  <div className="invalid-feedback">Please enter an album.</div>
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="genres" className="form-label">
-                    Genres
-                  </label>
-                  <input
-                    required
-                    className={`form-control ${
-                      validationErrors["genres"] ? "is-invalid" : ""
-                    }`}
-                    name="genres"
-                    placeholder="Enter genres separated by commas"
-                    value={songData.genres.join(",")}
-                    onChange={handleChange}
-                  ></input>
-                  <div className="invalid-feedback">
-                    Please enter at least one genre.
-                  </div>
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="releaseYear" className="form-label">
-                    Release Year
-                  </label>
-                  <input
-                    required
-                    type="number"
-                    className={`form-control ${
-                      validationErrors["releaseYear"]
-                        ? "is-invalid"
-                        : "is-valid"
-                    }`}
-                    name="releaseYear"
-                    placeholder="Enter release year"
-                    value={songData.releaseYear}
-                    onChange={handleChange}
-                  />
-                  <div className="valid-feedback">Looks good!</div>
-                  <div className="invalid-feedback">
-                    Please enter a release year between 1900 and the current
-                    year.
-                  </div>
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="rating" className="form-label">
-                    Rating
-                  </label>
-                  <input
-                    required
-                    type="number"
-                    className={`form-control ${
-                      validationErrors["rating"] ? "is-invalid" : "is-valid"
-                    }`}
-                    name="rating"
-                    placeholder="Enter rating between 1 and 5"
-                    value={songData.rating}
-                    onChange={handleChange}
-                  />
-                  <div className="valid-feedback">Looks good!</div>
-                  <div className="invalid-feedback">
-                    Please enter a rating between 1 and 5.
-                  </div>
-                </div>
+                <TextInput
+                  label="Title"
+                  name="title"
+                  value={songData.title}
+                  onChange={handleChange}
+                  required
+                  className={
+                    validationErrors["title"] ? "is-invalid" : ""
+                  }
+                  validFeedback="Looks good!"
+                  invalidFeedback={validationErrors["title"]}
+                />
+                <TextInput
+                  label="Artist"
+                  name="artist"
+                  value={songData.artist}
+                  onChange={handleChange}
+                  required
+                  className={
+                    validationErrors["artist"] ? "is-invalid" : ""
+                  }
+                  validFeedback="Looks good!"
+                  invalidFeedback={validationErrors["artist"]}
+                />
+                <TextInput
+                  label="Album"
+                  name="album"
+                  value={songData.album}
+                  onChange={handleChange}
+                  required
+                  className={
+                    validationErrors["album"] ? "is-invalid" : ""
+                  }
+                  validFeedback="Looks good!"
+                  invalidFeedback={validationErrors["album"]}
+                />
+                <TextInput
+                  label="Genres"
+                  name="genres"
+                  value={songData.genres.join(",")}
+                  onChange={handleChange}
+                  required
+                  className={
+                    validationErrors["genres"] ? "is-invalid" : ""
+                  }
+                  validFeedback="Looks good!"
+                  invalidFeedback={validationErrors["genres"]}
+                />
+                <TextInput
+                  label="Release Year"
+                  name="releaseYear"
+                  value={songData.releaseYear.toString()}
+                  type="number"
+                  onChange={handleChange}
+                  required
+                  className={
+                    validationErrors["releaseYear"] ? "is-invalid" : "is-valid"
+                  }
+                  validFeedback="Looks good!"
+                  invalidFeedback={validationErrors["releaseYear"]}
+                />
+                <TextInput
+                  label="Rating"
+                  name="rating"
+                  value={songData.rating.toString()}
+                  type="number"
+                  onChange={handleChange}
+                  required
+                  className={
+                    validationErrors["rating"] ? "is-invalid" : "is-valid"
+                  }
+                  validFeedback="Looks good!"
+                  invalidFeedback={validationErrors["rating"]}
+                />
                 <div className="modal-footer">
                   <button
                     type="button"
