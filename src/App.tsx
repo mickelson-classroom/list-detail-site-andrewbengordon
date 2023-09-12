@@ -1,10 +1,8 @@
-import './App.css';
-import ParentComponent from './Components/ParentComponent';
+import "./App.css";
+import { MainLayout } from "./Components/MainLayout";
 
 function App() {
-  return (
-    <ParentComponent />
-  );
+  return <MainLayout />;
 }
 
 export default App;

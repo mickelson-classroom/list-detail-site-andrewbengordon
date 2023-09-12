@@ -1,17 +1,17 @@
 import React from "react";
-import { Song } from "./ParentComponent";
+import { Song } from "./MainLayout";
 
-interface ListComponentProps {
+interface SongListProps {
   songs: Song[];
   selectedSong?: Song;
   selectSong: (item: Song) => void;
 }
 
-export const ListComponent = ({
+export const SongList = ({
   songs,
   selectedSong,
   selectSong,
-}: ListComponentProps) => {
+}: SongListProps) => {
   return (
     <div className="row m-2">
       <h2>Songs</h2>

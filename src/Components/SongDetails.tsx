@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Song } from "./ParentComponent";
+import { Song } from "./MainLayout";
 import { AddGenreModal } from "./AddGenreModal";
 
-interface DetailComponentProps {
+interface SongDetailsProps {
   selectedSong?: Song;
   removeSong: (itemId: number) => void;
   addGenre: (genre: string) => void;
@@ -10,13 +10,13 @@ interface DetailComponentProps {
   updateSongDetails: (updatedSong: Song) => void;
 }
 
-export const DetailComponent = ({
+export const SongDetails = ({
   selectedSong,
   removeSong,
   addGenre,
   deleteGenre,
   updateSongDetails,
-}: DetailComponentProps) => {
+}: SongDetailsProps) => {
   const [showModal, setShowModal] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [isEditing, setIsEditing] = useState(false);

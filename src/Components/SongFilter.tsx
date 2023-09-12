@@ -1,10 +1,10 @@
 import React from "react";
 
-interface FilterComponentProps {
+interface SongFilterProps {
   filterSongs: (filterValue: string) => void;
 }
 
-export const FilterComponent = ({ filterSongs }: FilterComponentProps) => {
+export const SongFilter = ({ filterSongs }: SongFilterProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const filterValue = event.target.value;
     filterSongs(filterValue);

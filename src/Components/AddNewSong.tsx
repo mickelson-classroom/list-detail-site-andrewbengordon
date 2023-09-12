@@ -1,17 +1,13 @@
 import React, { useState } from "react";
-import { Song } from "./ParentComponent";
+import { Song } from "./MainLayout";
 
-interface AddNewSongComponentProps {
+interface AddNewSongProps {
   addSong: (newSong: Song) => void;
   show: boolean;
   onHide: () => void;
 }
 
-export const AddNewSongComponent = ({
-  addSong,
-  show,
-  onHide,
-}: AddNewSongComponentProps) => {
+export const AddNewSong = ({ addSong, show, onHide }: AddNewSongProps) => {
   const initialSongData: Song = {
     id: new Date().getTime(),
     title: "",
@@ -201,7 +197,9 @@ export const AddNewSongComponent = ({
                     required
                     type="number"
                     className={`form-control ${
-                      validationErrors["releaseYear"] ? "is-invalid" : "is-valid"
+                      validationErrors["releaseYear"]
+                        ? "is-invalid"
+                        : "is-valid"
                     }`}
                     name="releaseYear"
                     placeholder="Enter release year"

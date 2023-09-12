@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { FilterComponent } from "./FilterComponent";
-import { ListComponent } from "./ListComponent";
-import { DetailComponent } from "./DetailComponent";
-import { AddNewSongComponent } from "./AddNewComponent";
+import { SongFilter } from "./SongFilter";
+import { SongList } from "./SongList";
+import { SongDetails } from "./SongDetails";
+import { AddNewSong } from "./AddNewSong";
 
 export interface Song {
   id: number;
@@ -14,7 +14,7 @@ export interface Song {
   rating: number;
 }
 
-function ParentComponent() {
+export const MainLayout = () => {
   const [songs, setSongs] = useState<Song[]>(defaultSongs);
   const [filteredSongs, setFilteredSongs] = useState<Song[]>(songs);
   const [selectedSong, setSelectedSong] = useState<Song | undefined>();
@@ -77,8 +77,8 @@ function ParentComponent() {
     <div className="parent container text-center">
       <div className="row">
         <div className="col-md-6">
-          <FilterComponent filterSongs={filterSongs} />
-          <ListComponent
+          <SongFilter filterSongs={filterSongs} />
+          <SongList
             songs={filteredSongs}
             selectedSong={selectedSong}
             selectSong={selectItem}
@@ -91,7 +91,7 @@ function ParentComponent() {
           </button>
         </div>
         <div className="col-md-6">
-          <DetailComponent
+          <SongDetails
             selectedSong={selectedSong}
             removeSong={removeSong}
             addGenre={addGenre}
@@ -99,7 +99,7 @@ function ParentComponent() {
             updateSongDetails={updateSongDetails}
           />
         </div>
-        <AddNewSongComponent
+        <AddNewSong
           addSong={addSong}
           onHide={() => setShowModal(false)}
           show={showModal}
@@ -138,5 +138,3 @@ const defaultSongs: Song[] = [
     rating: 3,
   },
 ];
-
-export default ParentComponent;
