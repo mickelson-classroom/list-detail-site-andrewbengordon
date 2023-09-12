@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Song } from "./MainLayout";
 import { TextInput } from "./TextInput";
 import { validate } from "../helpers/validate";
+import { SelectInput } from "./SelectInput";
 
 interface AddNewSongProps {
   addSong: (newSong: Song) => void;
@@ -21,10 +22,16 @@ export const AddNewSong = ({ addSong, show, onHide }: AddNewSongProps) => {
   };
 
   const [songData, setSongData] = useState<Song>(initialSongData);
-
   const [validationErrors, setValidationErrors] = useState<
     Record<string, string>
   >({});
+
+  const handleSelectChange = (name: string, value: string | number) => {
+    setSongData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -107,9 +114,7 @@ export const AddNewSong = ({ addSong, show, onHide }: AddNewSongProps) => {
                   value={songData.title}
                   onChange={handleChange}
                   required
-                  className={
-                    validationErrors["title"] ? "is-invalid" : ""
-                  }
+                  className={validationErrors["title"] ? "is-invalid" : ""}
                   validFeedback="Looks good!"
                   invalidFeedback={validationErrors["title"]}
                 />
@@ -119,9 +124,7 @@ export const AddNewSong = ({ addSong, show, onHide }: AddNewSongProps) => {
                   value={songData.artist}
                   onChange={handleChange}
                   required
-                  className={
-                    validationErrors["artist"] ? "is-invalid" : ""
-                  }
+                  className={validationErrors["artist"] ? "is-invalid" : ""}
                   validFeedback="Looks good!"
                   invalidFeedback={validationErrors["artist"]}
                 />
@@ -131,9 +134,7 @@ export const AddNewSong = ({ addSong, show, onHide }: AddNewSongProps) => {
                   value={songData.album}
                   onChange={handleChange}
                   required
-                  className={
-                    validationErrors["album"] ? "is-invalid" : ""
-                  }
+                  className={validationErrors["album"] ? "is-invalid" : ""}
                   validFeedback="Looks good!"
                   invalidFeedback={validationErrors["album"]}
                 />
@@ -143,16 +144,14 @@ export const AddNewSong = ({ addSong, show, onHide }: AddNewSongProps) => {
                   value={songData.genres.join(",")}
                   onChange={handleChange}
                   required
-                  className={
-                    validationErrors["genres"] ? "is-invalid" : ""
-                  }
+                  className={validationErrors["genres"] ? "is-invalid" : ""}
                   validFeedback="Looks good!"
                   invalidFeedback={validationErrors["genres"]}
                 />
                 <TextInput
                   label="Release Year"
                   name="releaseYear"
-                  value={songData.releaseYear.toString()}
+                  value={songData.releaseYear}
                   type="number"
                   onChange={handleChange}
                   required
@@ -162,18 +161,18 @@ export const AddNewSong = ({ addSong, show, onHide }: AddNewSongProps) => {
                   validFeedback="Looks good!"
                   invalidFeedback={validationErrors["releaseYear"]}
                 />
-                <TextInput
+                <SelectInput
                   label="Rating"
                   name="rating"
-                  value={songData.rating.toString()}
-                  type="number"
-                  onChange={handleChange}
-                  required
-                  className={
-                    validationErrors["rating"] ? "is-invalid" : "is-valid"
-                  }
-                  validFeedback="Looks good!"
-                  invalidFeedback={validationErrors["rating"]}
+                  value={songData.rating}
+                  options={[
+                    { value: 1, label: "1" },
+                    { value: 2, label: "2" },
+                    { value: 3, label: "3" },
+                    { value: 4, label: "4" },
+                    { value: 5, label: "5" },
+                  ]}
+                  onChange={handleSelectChange}
                 />
                 <div className="modal-footer">
                   <button

@@ -90,6 +90,15 @@ export const SongDetails = ({
     }
   };
 
+  const handleSelectChange = (name: string, value: string) => {
+    if (editedSong) {
+      setEditedSong({
+        ...editedSong,
+        [name]: value,
+      });
+    }
+  };
+
   return (
     <div className="card m-2">
       <div
@@ -119,6 +128,7 @@ export const SongDetails = ({
               <EditSong
                 editedSong={editedSong}
                 handleInputChange={handleInputChange}
+                handleSelectChange={handleSelectChange}
                 handleSaveClick={handleSaveClick}
                 handleCancelClick={handleCancelClick}
                 validationErrors={validationErrors}

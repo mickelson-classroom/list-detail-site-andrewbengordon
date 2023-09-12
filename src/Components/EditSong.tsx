@@ -1,10 +1,12 @@
 import { Song } from "./MainLayout";
+import { SelectInput } from "./SelectInput";
 import { TextInput } from "./TextInput";
 
 interface EditSongProps {
   editedSong?: Song;
   validationErrors?: Record<string, string>;
   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSelectChange: (name: string, value: string) => void;
   handleSaveClick: () => void;
   handleCancelClick: () => void;
 }
@@ -13,6 +15,7 @@ export const EditSong = ({
   editedSong,
   validationErrors,
   handleInputChange,
+  handleSelectChange,
   handleSaveClick,
   handleCancelClick,
 }: EditSongProps) => {
@@ -43,7 +46,7 @@ export const EditSong = ({
           value={editedSong?.album}
           onChange={handleInputChange}
           required
-            className={validationErrors?.album ? "is-invalid" : ""}
+          className={validationErrors?.album ? "is-invalid" : ""}
           invalidFeedback={validationErrors?.album}
         />
         <TextInput
@@ -56,15 +59,18 @@ export const EditSong = ({
           className={validationErrors?.releaseYear ? "is-invalid" : ""}
           invalidFeedback={validationErrors?.releaseYear}
         />
-        <TextInput
+        <SelectInput
           label="Rating"
           name="rating"
-          value={editedSong?.rating}
-          type="number"
-          onChange={handleInputChange}
-          required
-          className={validationErrors?.rating ? "is-invalid" : ""}
-          invalidFeedback={validationErrors?.rating}
+          value={editedSong?.rating!}
+          options={[
+            { value: 1, label: "1" },
+            { value: 2, label: "2" },
+            { value: 3, label: "3" },
+            { value: 4, label: "4" },
+            { value: 5, label: "5" },
+          ]}
+          onChange={handleSelectChange}
         />
         <button
           type="button"
