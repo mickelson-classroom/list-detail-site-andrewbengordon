@@ -12,6 +12,7 @@ export interface Song {
   genres: string[];
   releaseYear: number;
   rating: number;
+  fileType: string;
 }
 
 export const MainLayout = () => {
@@ -118,6 +119,7 @@ const defaultSongs: Song[] = [
     genres: ["Children's Music", "Rock"],
     releaseYear: 2020,
     rating: 5,
+    fileType: "mp3",
   },
   {
     id: 2,
@@ -127,6 +129,7 @@ const defaultSongs: Song[] = [
     genres: ["Alternative"],
     releaseYear: 2013,
     rating: 4,
+    fileType: "m4a"
   },
   {
     id: 3,
@@ -136,5 +139,6 @@ const defaultSongs: Song[] = [
     genres: ["Hip Hop"],
     releaseYear: 2018,
     rating: 3,
+    fileType: "wav"
   },
 ];

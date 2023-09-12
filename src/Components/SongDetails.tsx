@@ -32,6 +32,7 @@ export const SongDetails = ({
     Album: selectedSong?.album,
     "Release Year": selectedSong?.releaseYear,
     Rating: selectedSong?.rating,
+    "File Type": selectedSong?.fileType,
   };
 
   const handleAddGenre = (genre: string) => {

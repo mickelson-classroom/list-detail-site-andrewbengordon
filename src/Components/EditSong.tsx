@@ -1,4 +1,7 @@
+import { radioOptions } from "../constants/radioOptions";
+import { selectOptions } from "../constants/selectOptions";
 import { Song } from "./MainLayout";
+import { RadioInput } from "./RadioInput";
 import { SelectInput } from "./SelectInput";
 import { TextInput } from "./TextInput";
 
@@ -63,13 +66,14 @@ export const EditSong = ({
           label="Rating"
           name="rating"
           value={editedSong?.rating!}
-          options={[
-            { value: 1, label: "1" },
-            { value: 2, label: "2" },
-            { value: 3, label: "3" },
-            { value: 4, label: "4" },
-            { value: 5, label: "5" },
-          ]}
+          options={selectOptions}
+          onChange={handleSelectChange}
+        />
+        <RadioInput
+          label="File Type"
+          name="fileType"
+          selectedOption={editedSong?.fileType!}
+          options={radioOptions}
           onChange={handleSelectChange}
         />
         <button

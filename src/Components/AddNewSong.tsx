@@ -3,6 +3,9 @@ import { Song } from "./MainLayout";
 import { TextInput } from "./TextInput";
 import { validate } from "../helpers/validate";
 import { SelectInput } from "./SelectInput";
+import { RadioInput } from "./RadioInput";
+import { radioOptions } from "../constants/radioOptions";
+import { selectOptions } from "../constants/selectOptions";
 
 interface AddNewSongProps {
   addSong: (newSong: Song) => void;
@@ -19,6 +22,7 @@ export const AddNewSong = ({ addSong, show, onHide }: AddNewSongProps) => {
     genres: [],
     releaseYear: 2023,
     rating: 5,
+    fileType: "mp3",
   };
 
   const [songData, setSongData] = useState<Song>(initialSongData);
@@ -165,13 +169,14 @@ export const AddNewSong = ({ addSong, show, onHide }: AddNewSongProps) => {
                   label="Rating"
                   name="rating"
                   value={songData.rating}
-                  options={[
-                    { value: 1, label: "1" },
-                    { value: 2, label: "2" },
-                    { value: 3, label: "3" },
-                    { value: 4, label: "4" },
-                    { value: 5, label: "5" },
-                  ]}
+                  options={selectOptions}
+                  onChange={handleSelectChange}
+                />
+                <RadioInput
+                  label="File Type"
+                  name="fileType"
+                  selectedOption={songData.fileType}
+                  options={radioOptions}
                   onChange={handleSelectChange}
                 />
                 <div className="modal-footer">
